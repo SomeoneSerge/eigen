@@ -106,7 +106,7 @@ void lmpar2(const QRSolver &qr, const VectorType  &diag, const VectorType  &qtb,
   * Check wikipedia for more information.
   * http://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm
   */
-template<typename _FunctorType, typename _PermutationType=PermutationMatrix<Dynamic,Dynamic> >
+template<typename _FunctorType>
 class LevenbergMarquardt : internal::no_assignment_operator
 {
   public:
@@ -117,7 +117,7 @@ class LevenbergMarquardt : internal::no_assignment_operator
     typedef typename JacobianType::RealScalar RealScalar; 
     typedef typename QRSolver::StorageIndex PermIndex;
     typedef Matrix<Scalar,Dynamic,1> FVectorType;
-    typedef _PermutationType PermutationType;
+    typedef QRSolver::PermutationType::Base PermutationType;
   public:
     LevenbergMarquardt(FunctorType& functor) 
     : m_functor(functor),m_nfev(0),m_njev(0),m_fnorm(0.0),m_gnorm(0),
