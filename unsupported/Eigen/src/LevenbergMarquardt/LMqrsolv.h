@@ -19,7 +19,7 @@ namespace Eigen {
 
 namespace internal {
 
-template <typename Scalar,int Rows, int Cols, typename PermIndex, typename _PermutationMatrix>
+template <typename Scalar,int Rows, int Cols, typename _PermutationMatrix>
 void lmqrsolv(
   Matrix<Scalar,Rows,Cols> &s,
   const _PermutationMatrix &iPerm,
@@ -51,7 +51,7 @@ void lmqrsolv(
 
         /*        prepare the row of d to be eliminated, locating the */
         /*        diagonal element using p from the qr factorization. */
-        const PermIndex l = iPerm.indices()(j);
+        const auto l = iPerm.indices()(j);
         if (diag[l] == 0.)
             break;
         sdiag.tail(n-j).setZero();
