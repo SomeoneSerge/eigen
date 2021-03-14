@@ -272,9 +272,9 @@ class LevenbergMarquardt : internal::no_assignment_operator
     ComputationInfo m_info; 
 };
 
-template<typename FunctorType, typename _PermutationType>
+template<typename FunctorType>
 LevenbergMarquardtSpace::Status
-LevenbergMarquardt<FunctorType, _PermutationType>::minimize(FVectorType  &x)
+LevenbergMarquardt<FunctorType>::minimize(FVectorType  &x)
 {
     LevenbergMarquardtSpace::Status status = minimizeInit(x);
     if (status==LevenbergMarquardtSpace::ImproperInputParameters) {
@@ -289,9 +289,9 @@ LevenbergMarquardt<FunctorType, _PermutationType>::minimize(FVectorType  &x)
      return status;
 }
 
-template<typename FunctorType, typename _PermutationType>
+template<typename FunctorType>
 LevenbergMarquardtSpace::Status
-LevenbergMarquardt<FunctorType, _PermutationType>::minimizeInit(FVectorType  &x)
+LevenbergMarquardt<FunctorType>::minimizeInit(FVectorType  &x)
 {
     n = x.size();
     m = m_functor.values();
@@ -339,9 +339,9 @@ LevenbergMarquardt<FunctorType, _PermutationType>::minimizeInit(FVectorType  &x)
     return LevenbergMarquardtSpace::NotStarted;
 }
 
-template<typename FunctorType, typename _PermutationType>
+template<typename FunctorType>
 LevenbergMarquardtSpace::Status
-LevenbergMarquardt<FunctorType, _PermutationType>::lmder1(
+LevenbergMarquardt<FunctorType>::lmder1(
         FVectorType  &x,
         const Scalar tol
         )
@@ -362,9 +362,9 @@ LevenbergMarquardt<FunctorType, _PermutationType>::lmder1(
 }
 
 
-template<typename FunctorType, typename _PermutationType>
+template<typename FunctorType>
 LevenbergMarquardtSpace::Status
-LevenbergMarquardt<FunctorType, _PermutationType>::lmdif1(
+LevenbergMarquardt<FunctorType>::lmdif1(
         FunctorType &functor,
         FVectorType  &x,
         Index *nfev,

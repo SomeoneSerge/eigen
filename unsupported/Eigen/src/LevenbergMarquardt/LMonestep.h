@@ -16,9 +16,9 @@
 
 namespace Eigen {
 
-template<typename FunctorType, typename _PermutationType>
+template<typename FunctorType>
 LevenbergMarquardtSpace::Status
-LevenbergMarquardt<FunctorType, _PermutationType>::minimizeOneStep(FVectorType  &x)
+LevenbergMarquardt<FunctorType>::minimizeOneStep(FVectorType  &x)
 {
   using std::abs;
   using std::sqrt;
