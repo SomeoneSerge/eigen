@@ -19,10 +19,10 @@ namespace Eigen {
 
 namespace internal {
 
-template <typename Scalar,int Rows, int Cols, typename PermIndex>
+template <typename Scalar,int Rows, int Cols, typename PermIndex, typename _PermutationMatrix>
 void lmqrsolv(
   Matrix<Scalar,Rows,Cols> &s,
-  const PermutationMatrix<Dynamic,Dynamic,PermIndex> &iPerm,
+  const _PermutationMatrix &iPerm,
   const Matrix<Scalar,Dynamic,1> &diag,
   const Matrix<Scalar,Dynamic,1> &qtb,
   Matrix<Scalar,Dynamic,1> &x,
@@ -98,10 +98,10 @@ void lmqrsolv(
     x = iPerm * wa; 
 }
 
-template <typename Scalar, int _Options, typename Index>
+template <typename Scalar, int _Options, typename Index, typename _PermutationMatrix>
 void lmqrsolv(
   SparseMatrix<Scalar,_Options,Index> &s,
-  const PermutationMatrix<Dynamic,Dynamic> &iPerm,
+  const _PermutationMatrix &iPerm,
   const Matrix<Scalar,Dynamic,1> &diag,
   const Matrix<Scalar,Dynamic,1> &qtb,
   Matrix<Scalar,Dynamic,1> &x,
