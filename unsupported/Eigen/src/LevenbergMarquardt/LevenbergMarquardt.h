@@ -117,7 +117,7 @@ class LevenbergMarquardt : internal::no_assignment_operator
     typedef typename JacobianType::RealScalar RealScalar; 
     typedef typename QRSolver::StorageIndex PermIndex;
     typedef Matrix<Scalar,Dynamic,1> FVectorType;
-    typedef QRSolver::PermutationType::Base PermutationType;
+    typedef QRSolver::PermutationType PermutationType;
   public:
     LevenbergMarquardt(FunctorType& functor) 
     : m_functor(functor),m_nfev(0),m_njev(0),m_fnorm(0.0),m_gnorm(0),
@@ -227,10 +227,6 @@ class LevenbergMarquardt : internal::no_assignment_operator
      */
     JacobianType& matrixR() {return m_rfactor; }
     
-    /** the permutation used in the QR factorization
-     */
-    PermutationType permutation() {return m_permutation; }
-    
     /** 
      * \brief Reports whether the minimization was successful
      * \returns \c Success if the minimization was successful,
@@ -265,7 +261,6 @@ class LevenbergMarquardt : internal::no_assignment_operator
     Index m_iter; // Number of iterations performed
     RealScalar m_delta;
     bool m_useExternalScaling;
-    PermutationType m_permutation;
     FVectorType m_wa1, m_wa2, m_wa3, m_wa4; //Temporary vectors
     RealScalar m_par;
     bool m_isInitialized; // Check whether the minimization step has been called

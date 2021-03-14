@@ -47,7 +47,7 @@ LevenbergMarquardt<FunctorType>::minimizeOneStep(FVectorType  &x)
   }
   // Make a copy of the first factor with the associated permutation
   m_rfactor = qrfac.matrixR();
-  m_permutation = (qrfac.colsPermutation());
+  auto permutation = (qrfac.colsPermutation());
 
   /* on the first iteration and if external scaling is not used, scale according */
   /* to the norms of the columns of the initial jacobian. */
@@ -74,8 +74,8 @@ LevenbergMarquardt<FunctorType>::minimizeOneStep(FVectorType  &x)
   m_gnorm = 0.;
   if (m_fnorm != 0.)
       for (Index j = 0; j < n; ++j)
-          if (m_wa2[m_permutation.indices()[j]] != 0.)
-              m_gnorm = (std::max)(m_gnorm, abs( m_rfactor.col(j).head(j+1).dot(m_qtf.head(j+1)/m_fnorm) / m_wa2[m_permutation.indices()[j]]));
+          if (m_wa2[permutation.indices()[j]] != 0.)
+              m_gnorm = (std::max)(m_gnorm, abs( m_rfactor.col(j).head(j+1).dot(m_qtf.head(j+1)/m_fnorm) / m_wa2[permutation.indices()[j]]));
 
   /* test for convergence of the gradient norm. */
   if (m_gnorm <= m_gtol) {
@@ -113,7 +113,7 @@ LevenbergMarquardt<FunctorType>::minimizeOneStep(FVectorType  &x)
 
     /* compute the scaled predicted reduction and */
     /* the scaled directional derivative. */
-    m_wa3 = m_rfactor.template triangularView<Upper>() * (m_permutation.inverse() *m_wa1);
+    m_wa3 = m_rfactor.template triangularView<Upper>() * (permutation.inverse() *m_wa1);
     temp1 = numext::abs2(m_wa3.stableNorm() / m_fnorm);
     temp2 = numext::abs2(sqrt(m_par) * pnorm / m_fnorm);
     prered = temp1 + temp2 / Scalar(.5);
