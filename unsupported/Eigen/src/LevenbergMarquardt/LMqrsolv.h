@@ -140,30 +140,24 @@ void lmqrsolv(
       // Browse the nonzero elements of row j of the upper triangular s
       for (k = j; k < n; ++k)
       {
-        typename FactorType::InnerIterator itk(R,k);
-        for (; itk; ++itk){
-          if (itk.index() < k) continue;
-          else break;
-        }
         //At this point, we have the diagonal element R(k,k)
         // Determine a givens rotation which eliminates 
         // the appropriate element in the current row of d
-        givens.makeGivens(-itk.value(), sdiag(k));
+        givens.makeGivens(-R.coeff(k,k), sdiag(k));
         
         // Compute the modified diagonal element of r and 
         // the modified element of ((q transpose)*b,0).
-        itk.valueRef() = givens.c() * itk.value() + givens.s() * sdiag(k);
+        R.coeffRef(k,k) = givens.c() * R.coeff(k,k) + givens.s() * sdiag(k);
         temp = givens.c() * wa(k) + givens.s() * qtbpj; 
         qtbpj = -givens.s() * wa(k) + givens.c() * qtbpj;
         wa(k) = temp;
         
         // Accumulate the transformation in the remaining k row/column of R
-        for (++itk; itk; ++itk)
+        for (i = k+1; i<n; ++i)
         {
-          i = itk.index();
-          temp = givens.c() *  itk.value() + givens.s() * sdiag(i);
-          sdiag(i) = -givens.s() * itk.value() + givens.c() * sdiag(i);
-          itk.valueRef() = temp;
+            temp = givens.c() *  R.coeff(k,i) + givens.s() * sdiag(i);
+            sdiag(i) = -givens.s() * R.coeff(k,i) + givens.c() * sdiag(i);
+            R.coeffRef(k,i) = temp;
         }
       }
     }
